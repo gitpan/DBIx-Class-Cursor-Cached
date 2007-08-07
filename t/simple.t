@@ -93,7 +93,7 @@ is_deeply($cache->get($rs->cursor->cache_key), $expect_data,
 
 ok(!defined($cache->get($rs->cursor->cache_key)), 'cache cleared');
 
-  @cds = $rs->all; # refills cache
+  @cds = (); while (my $rec = $rs->next) { push(@cds, $rec); }
 
 is_deeply([ map { [ $_->id, $_->title ] } @cds ], $expect_data,
   'correct data in objects');

@@ -1,4 +1,7 @@
 Revision history for DBIx::Class::Cursor::Cached
 
+1.0.1 7 August 2007 12:37:00
+        - Fixed bug in next() as spotted by atsushi kobayashi
+
 1.0.0 6 August 2007 17:38:00
         - initial release

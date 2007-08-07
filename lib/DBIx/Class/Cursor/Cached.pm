@@ -8,7 +8,7 @@ use Digest::SHA1 ();
 
 use vars qw($VERSION);
 
-$VERSION = '1.000000';
+$VERSION = '1.000001';
 
 sub new {
   my $class = shift;
@@ -34,7 +34,7 @@ sub new {
 
 sub next {
   my ($self) = @_;
-  return @{($self->{data} ||= $self->_fill_data)->{$self->{pos}++}||[]};
+  return @{($self->{data} ||= $self->_fill_data)->[$self->{pos}++]||[]};
 }
 
 sub all {
