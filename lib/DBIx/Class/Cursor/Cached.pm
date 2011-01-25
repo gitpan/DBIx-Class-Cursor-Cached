@@ -5,10 +5,11 @@ use warnings;
 use 5.6.1;
 use Storable ();
 use Digest::SHA1 ();
+use Carp::Clan qw/^DBIx::Class/;
 
 use vars qw($VERSION);
 
-$VERSION = '1.000001';
+$VERSION = '1.001000';
 
 sub new {
   my $class = shift;
@@ -48,7 +49,25 @@ sub reset {
 
 sub _build_cache_key {
   my ($class, $storage, $args, $attrs) = @_;
-  return Digest::SHA1::sha1_hex(Storable::nfreeze([ $args, $attrs ]));
+  # compose the query and bind values, like as_query(),
+  # so the cache key is only affected by what the database sees
+  # and not any other cruft in $attrs
+  my $ref = $storage->_select_args_to_query(@{$args}[0..2], $attrs);
+
+  my $conn;
+  if (! ($conn = $storage->_dbh) ) {
+    my $connect_info = $storage->_dbi_connect_info;
+    if (! ref($connect_info->[0]) ) {
+      $conn = { Name => $connect_info->[0], Username => $connect_info->[1] };
+    } else {
+      carp "Invoking connector coderef $connect_info->[0] in order to obtain cache-lookup information";
+      $conn = $connect_info->[0]->();
+    }
+  }
+  
+  local $Storable::canonical = 1;
+  return Digest::SHA1::sha1_hex(Storable::nfreeze( [ $ref, $conn->{Name}, $conn->{Username} || '' ] ));
+
 }
 
 sub _fill_data {

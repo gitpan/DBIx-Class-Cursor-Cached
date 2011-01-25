@@ -1,22 +1,30 @@
---- 
-abstract: cursor class with built-in caching support
-author: Matt S Trout <mst@shadowcat.co.uk> http://www.shadowcat.co.uk/
-build_requires: 
+---
+abstract: 'cursor class with built-in caching support'
+author:
+  - 'Matt S Trout <mst@shadowcat.co.uk> http://www.shadowcat.co.uk/'
+build_requires:
   Cache::FileCache: 0
+  DBD::SQLite: 1.25
+  ExtUtils::MakeMaker: 6.42
   Test::More: 0
+configure_requires:
+  ExtUtils::MakeMaker: 6.42
 distribution_type: module
-generated_by: Module::Install version 0.67
+generated_by: 'Module::Install version 1.00'
 license: perl
-meta-spec: 
-  url: http://module-build.sourceforge.net/META-spec-v1.3.html
-  version: 1.3
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
 name: DBIx-Class-Cursor-Cached
-no_index: 
-  directory: 
+no_index:
+  directory:
     - inc
     - t
-requires: 
-  DBIx::Class: 0.08004
+requires:
+  Carp::Clan: 6.0
+  DBIx::Class: 0.08100
   Digest::SHA1: 0
   perl: 5.6.1
-version: 1.0.1
+resources:
+  license: http://dev.perl.org/licenses/
+version: 1.001000

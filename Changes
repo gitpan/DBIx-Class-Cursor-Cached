@@ -1,5 +1,9 @@
 Revision history for DBIx::Class::Cursor::Cached
 
+1.1.0 25 January 2011 10:47:00
+        - $Storable::canonical = 1 (Bill Moseley)
+        - base cache key on rendered SQL, bind values and connect info RT #62211 (Tim Bunce)
+
 1.0.1 7 August 2007 12:37:00
         - Fixed bug in next() as spotted by atsushi kobayashi
 

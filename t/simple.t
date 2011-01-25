@@ -101,3 +101,52 @@ is_deeply($cache->get($rs->cursor->cache_key), $expect_data,
   'correct data in cache');
 
 }
+
+{
+  my $schema = SchemaClass->connect(
+    sub {
+      DBI->connect('dbi:SQLite:t/var/test.db', '', '', { RaiseError => 1 }) },
+        { cursor_class => 'DBIx::Class::Cursor::Cached' }
+  );
+
+  $schema->default_resultset_attributes({
+    cache_object => Cache::FileCache->new({ namespace => 'SchemaClass' }),
+  });
+
+my $cache = $schema->default_resultset_attributes->{cache_object};
+
+  my $rs = $schema->resultset('CD')->search(undef, { cache_for => 300 });
+
+  my @cds = $rs->all; # fills cache
+
+is_deeply([ map { [ $_->id, $_->title ] } @cds ], $expect_data,
+  'correct data in objects');
+is_deeply($cache->get($rs->cursor->cache_key), $expect_data,
+  'correct data in cache');
+
+  $rs = $schema->resultset('CD')->search(undef, { cache_for => 300 });
+    # refresh resultset
+
+$schema->storage->disconnect;
+
+  @cds = $rs->all; # uses cache, no SQL run
+
+ok(!$schema->storage->connected, 'no reconnect made since no SQL required');
+is_deeply([ map { [ $_->id, $_->title ] } @cds ], $expect_data,
+  'correct data in objects');
+is_deeply($cache->get($rs->cursor->cache_key), $expect_data,
+  'correct data in cache');
+
+  $rs->cursor->clear_cache; # deletes data from cache
+
+ok(!defined($cache->get($rs->cursor->cache_key)), 'cache cleared');
+
+  @cds = (); while (my $rec = $rs->next) { push(@cds, $rec); }
+
+is_deeply([ map { [ $_->id, $_->title ] } @cds ], $expect_data,
+  'correct data in objects');
+is_deeply($cache->get($rs->cursor->cache_key), $expect_data,
+  'correct data in cache');
+}
+
+
