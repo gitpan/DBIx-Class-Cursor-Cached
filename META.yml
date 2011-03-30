@@ -22,9 +22,9 @@ no_index:
     - t
 requires:
   Carp::Clan: 6.0
-  DBIx::Class: 0.08100
+  DBIx::Class: 0.08124
   Digest::SHA1: 0
-  perl: 5.6.1
+  perl: 5.8.1
 resources:
   license: http://dev.perl.org/licenses/
-version: 1.001000
+version: 1.001001

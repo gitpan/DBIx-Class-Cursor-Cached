@@ -2,14 +2,14 @@ package DBIx::Class::Cursor::Cached;
 
 use strict;
 use warnings;
-use 5.6.1;
+use 5.008001;
 use Storable ();
 use Digest::SHA1 ();
 use Carp::Clan qw/^DBIx::Class/;
 
 use vars qw($VERSION);
 
-$VERSION = '1.001000';
+$VERSION = '1.001001';
 
 sub new {
   my $class = shift;

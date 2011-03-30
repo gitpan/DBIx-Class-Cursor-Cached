@@ -1,5 +1,9 @@
 Revision history for DBIx::Class::Cursor::Cached
 
+1.1.1 30 March 2011 12:17:00
+        - use 5.8.1 instead of 5.6.1 (and correctly)
+        - bump DBIx::Class dependency (RT#66601)
+
 1.1.0 25 January 2011 10:47:00
         - $Storable::canonical = 1 (Bill Moseley)
         - base cache key on rendered SQL, bind values and connect info RT #62211 (Tim Bunce)

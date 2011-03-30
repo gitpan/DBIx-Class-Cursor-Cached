@@ -5,7 +5,7 @@ use inc::Module::Install 1;
 name 'DBIx-Class-Cursor-Cached';
 all_from 'lib/DBIx/Class/Cursor/Cached.pm';
 
-requires 'DBIx::Class' => '0.08100';
+requires 'DBIx::Class' => '0.08124';
 requires 'Digest::SHA1';
 requires 'Carp::Clan' => '6.0';
 
