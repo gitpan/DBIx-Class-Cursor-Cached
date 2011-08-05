@@ -1,5 +1,8 @@
 Revision history for DBIx::Class::Cursor::Cached
 
+1.1.2 5 August 2011 15:47:00
+        - use Digest::SHA over Digest::SHA1 since it is core, RT #70092 (Salvatore Bonaccorso)
+
 1.1.1 30 March 2011 12:17:00
         - use 5.8.1 instead of 5.6.1 (and correctly)
         - bump DBIx::Class dependency (RT#66601)

@@ -4,12 +4,12 @@ use strict;
 use warnings;
 use 5.008001;
 use Storable ();
-use Digest::SHA1 ();
+use Digest::SHA ();
 use Carp::Clan qw/^DBIx::Class/;
 
 use vars qw($VERSION);
 
-$VERSION = '1.001001';
+$VERSION = '1.001002';
 
 sub new {
   my $class = shift;
@@ -66,7 +66,7 @@ sub _build_cache_key {
   }
   
   local $Storable::canonical = 1;
-  return Digest::SHA1::sha1_hex(Storable::nfreeze( [ $ref, $conn->{Name}, $conn->{Username} || '' ] ));
+  return Digest::SHA::sha1_hex(Storable::nfreeze( [ $ref, $conn->{Name}, $conn->{Username} || '' ] ));
 
 }
 
